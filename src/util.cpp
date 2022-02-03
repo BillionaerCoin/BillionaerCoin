@@ -559,9 +559,43 @@ boost::filesystem::path GetConfigFile(const std::string& confPath)
 
 void ReadConfigFile(const std::string& confPath)
 {
+//    boost::filesystem::ifstream streamConfig(GetConfigFile(confPath));
+//    if (!streamConfig.good())
+//        return; // No bitcoin.conf file is OK
+
     boost::filesystem::ifstream streamConfig(GetConfigFile(confPath));
-    if (!streamConfig.good())
-        return; // No bitcoin.conf file is OK
+    if (!streamConfig.good()){
+        // Create empty minerium.conf if it does not excist
+        FILE* configFile = fopen(GetConfigFile(confPath).string().c_str(), "a");
+//        if (configFile != NULL)
+//            fclose(configFile);
+
+        if (configFile != NULL) {
+            std::string strHeader = "# Billionaercoin config file\n"
+                          "rpcuser=username\n"
+                          "rpcpassword=password\n"
+                          "server=1\n"
+                          "listen=1\n"
+                          "daemon=1\n"
+                          "gen=0\n"
+                          "port=44814\n"
+                          "rpcport=44817\n"
+                          "onlynet=ipv4\n"
+                          "rpcbind=127.0.0.1\n"
+                          "maxconnections=40\n"
+                          "fallbackfee=0.0001\n"
+                          "rpcallowip=127.0.0.1\n"
+                          "\n"
+                          "# ADDNODES:\n"
+                          "addnode=134.209.248.190:44814\n"
+                          "addnode=165.22.77.132:44814\n"
+                          "addnode=147.182.181.86:44814\n"
+                          "addnode=164.90.158.86:44814\n";
+            fwrite(strHeader.c_str(), std::strlen(strHeader.c_str()), 1, configFile);
+            fclose(configFile);
+        }
+        return; // Nothing to read, so just return
+    }
 
     {
         LOCK(cs_args);

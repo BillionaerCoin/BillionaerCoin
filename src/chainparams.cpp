@@ -72,40 +72,40 @@ public:
     CMainParams() {
         strNetworkID = "main";
         consensus.nSubsidyHalvingInterval = 1051200;
-		/*
-        consensus.BIP34Height = 710000;
-        consensus.BIP34Hash = uint256S("fa09d204a83a768ed5a7c8d441fa62f2043abf420cff1226c7b4329aeb9d51cf");
-        consensus.BIP65Height = 918684; // bab3041e8977e0dc3eeff63fe707b92bde1dd449d8efafb248c27c8264cc311a
-        consensus.BIP66Height = 811879; // 7aceee012833fa8952f8835d8b1b3ae233cd6ab08fdb27a771d2bd7bdc491894
-		*/
+		
+        consensus.BIP34Height = 15330;
+        consensus.BIP34Hash = uint256S("0xd3878b86586e3946acb57bda0cfc496f900d09a20d8e528085685241de6aad02");
+        consensus.BIP65Height = 15330;
+        consensus.BIP66Height = 15330;
+		
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); 
         consensus.nPowTargetTimespan = 10 * 60;
         consensus.nPowTargetSpacing = 1 * 60;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
-        consensus.nRuleChangeActivationThreshold = 6048; // 75% of 8064
-        consensus.nMinerConfirmationWindow = 8064; // nPowTargetTimespan / nPowTargetSpacing * 4
-		/*
+        consensus.nRuleChangeActivationThreshold = 9;
+        consensus.nMinerConfirmationWindow = 12;
+		
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
-        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
-        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
+        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1642808504;
+        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1643693000;
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1485561600; // January 28, 2017
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1517356801; // January 31st, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1642808504;
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1643693000;
 
         // Deployment of SegWit (BIP141, BIP143, and BIP147)
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].bit = 1;
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1485561600; // January 28, 2017
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1517356801; // January 31st, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1642808504;
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1643693000;
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000006805c7318ce2736c0");
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000000da7202900e28");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x1673fa904a93848eca83d5ca82c7af974511a7e640e22edc2976420744f2e56a"); //1155631
-		*/
+        consensus.defaultAssumeValid = uint256S("0x58a507685cfc3e045d95ed0ef21494430899ab3be0ee89655ae54c6be96813cf");
+		
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -121,16 +121,12 @@ public:
 
         genesis = CreateGenesisBlock(1640189773, 2000393295, 0x1e0ffff0, 1, 0 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-		assert(genesis.hashMerkleRoot == uint256S("0xb0cc52d0ab21212a51f398ecc98384aa0ad56399d9bdcd5f6e13d87367fd1836"));
+	assert(genesis.hashMerkleRoot == uint256S("0xb0cc52d0ab21212a51f398ecc98384aa0ad56399d9bdcd5f6e13d87367fd1836"));
         assert(consensus.hashGenesisBlock == uint256S("0x2ac5a6ce63bcdbc8dcbe6b9d24f5db4691268257860c64556541454165cd1c50"));
 
         // Note that of those with the service bits flag, most only support a subset of possible options
-        vSeeds.push_back(CDNSSeedData("185.163.118.233", "185.163.118.233", true));
-        vSeeds.push_back(CDNSSeedData("188.68.52.16", "188.68.52.16", true));
-        vSeeds.push_back(CDNSSeedData("134.209.248.190", "134.209.248.190", true));
-        //vSeeds.push_back(CDNSSeedData("188.68.52.16", "188.68.52.16", true));
-        //vSeeds.push_back(CDNSSeedData("188.68.52.16", "188.68.52.16", true));
-        //vSeeds.push_back(CDNSSeedData("188.68.52.16", "188.68.52.16", true));
+
+    //    vSeeds.push_back(CDNSSeedData("", "", true));
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,25);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
@@ -153,14 +149,24 @@ public:
             (  2, uint256S("0xa3c96c5d851181452d329e990171893a128272abd33c4d8a878013932736b480"))
             (  3, uint256S("0x15fc302b6ee856cc20f6bf9ed7e6b19732a81debd2f6cba741d17e2ebaad3773"))
             (  11, uint256S("0x9bd8b96e4f3cc3d74de40a1ed0827af1a337610f5b4e94c045d8864daa66d6b6"))
+            (  100, uint256S("0xeddcb360c9fa1a539dc7a022738326996b54244bfee8499f560a0aa8410d0ba8"))
+            (  1000, uint256S("0x4052907038d43e42032d6dfdbe9f76dcc859cf329e5fdcba7c2bfb13cef6f2ca"))
+            (  5000, uint256S("0xbf5a564d3ddbca32a1623ac4262e35d179a9c31f8cbf0520ef045541baeae739"))
+            (  10000, uint256S("0xed6078076cdc0678d37ecf965bc45185f2d58d843204171df5e488a691a8e1b3"))
+            (  15000, uint256S("0x9e84be4a86219fc431081f5c6c83d1e70dec7f088c9601d00b465b8464654b97"))
+            (  15322, uint256S("0xac5e309c62ffa04848e8aca6f17a7bee224f6067b2f8a8297eb518f9c04e29bd"))  
+            (  15336, uint256S("0xf9e6c610a713d1569be7b6a373cc58ac1ce508a1b34f89a39a9ec9b6ee932857"))  // Segwit + CSV activation started       
+            (  15348, uint256S("0x69e0a5676ead0b34001f8c7ab19d941c209d810e9a4a9dc63b019823d6d20fc1"))  // Segwit + CSV activation locked_in       
+            (  15360, uint256S("0x828da61dc2b89146413dda15ea0878c88e460c235fa803be039409f4d4606187"))  // Segwit + CSV active 
+            (  15371, uint256S("0x58a507685cfc3e045d95ed0ef21494430899ab3be0ee89655ae54c6be96813cf"))  // Segwit first block matured       
         };
 
         chainTxData = ChainTxData{
             // Data as of block b44bc5ae41d1be67227ba9ad875d7268aa86c965b1d64b47c35be6e8d5c352f4 (height 1155626).
-            1640189773, // * UNIX timestamp of last known number of transactions
-            0,  // * total number of transactions between genesis and that timestamp
+            1643694410, // * UNIX timestamp of last known number of transactions
+            15584,  // * total number of transactions between genesis and that timestamp
                     //   (the tx=... number in the SetBestChain debug.log lines)
-            0.0     // * estimated number of transactions per second after that timestamp
+            0.998782  // * estimated number of transactions per second after that timestamp
         };
     }
 };
